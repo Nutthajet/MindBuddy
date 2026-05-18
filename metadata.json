@@ -1,0 +1,6 @@
+{
+  "name": "Buddy - Neurodiversity Support Companion",
+  "description": "Companion webapp for Buddy doll, providing real-time stress monitoring and therapist connectivity for ASD Level 1.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
