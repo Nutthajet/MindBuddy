@@ -87,7 +87,7 @@ export default function Chat() {
       const data = await response.json();
       const aiContent =
         data.candidates?.[0]?.content?.parts?.[0]?.text ||
-        'ขออภัยนะคะ ตอนนี้ฉันยังตอบคำถามนี้ไม่ได้ ลองพิมพ์ใหม่อีกครั้งได้เลย';
+        'ขออภัยนะคะ ตอนนี้ฉันยังตอบคำถามนี้ไม่ได้ ลองพิมพ์ใหม่อีกครั้งได้เลย!';
 
       const aiMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
