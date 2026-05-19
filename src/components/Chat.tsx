@@ -112,8 +112,8 @@ export default function Chat() {
   };
 
   return (
-    <div className="flex h-full flex-col bg-[linear-gradient(180deg,rgba(255,252,248,0.6),rgba(255,248,251,0.95))]">
-      <div className="flex-1 space-y-4 overflow-y-auto p-4 md:space-y-6 md:p-6">
+    <div className="flex h-screen flex-col overflow-hidden bg-[linear-gradient(180deg,rgba(255,252,248,0.6),rgba(255,248,251,0.95))]">
+      <div className="flex-1 space-y-4 overflow-y-auto p-4 pb-44 md:space-y-6 md:p-6">
         <div className="rounded-[28px] border border-[color:var(--border-soft)] bg-[rgba(255,255,255,0.68)] p-4 shadow-[var(--shadow-soft-sm)] backdrop-blur-sm md:p-5">
           <p className="text-sm leading-7 text-[var(--text-body)]">
             พื้นที่นี้ถูกออกแบบให้สงบ อ่อนโยน และคุยกันได้ทีละเรื่อง คุณสามารถพิมพ์สั้นๆ หรือหยุดพักสายตาก่อนได้ตามสบาย
@@ -176,7 +176,7 @@ export default function Chat() {
 
       <form
         onSubmit={handleSendMessage}
-        className="shrink-0 border-t border-[color:var(--border-soft)] bg-[rgba(255,255,255,0.72)] p-4 backdrop-blur-xl md:p-6"
+        className="sticky bottom-20 z-50 shrink-0 border-t border-[color:var(--border-soft)] bg-[rgba(255,255,255,0.92)] p-4 backdrop-blur-xl md:p-6"
       >
         <div className="flex gap-2 md:gap-3">
           <input
@@ -202,9 +202,6 @@ export default function Chat() {
             <Send size={20} />
           </button>
         </div>
-        <p className="mt-3 text-[11px] font-semibold tracking-wide text-[var(--text-muted)]">
-          ขับเคลื่อนโดย Gemini AI
-        </p>
       </form>
     </div>
   );
