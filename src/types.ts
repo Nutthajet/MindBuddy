@@ -18,4 +18,4 @@ export interface Therapist {
   avatar: string;
 }
 
-export type View = 'dashboard' | 'stats' | 'consultation' | 'settings';
+export type View = 'dashboard' | 'stats' | 'consultation' | 'chat' | 'settings';

@@ -1,17 +1,78 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Sarabun:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Sarabun:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Outfit", "Sarabun", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Nunito", "Sarabun", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
   
-  --color-brand-primary: #F97316; /* Orange 500 */
-  --color-brand-secondary: #4F46E5; /* Indigo 600 */
+  --color-brand-primary: #f6b8c9;
+  --color-brand-secondary: #c5b9f7;
 }
 
 @layer base {
+  :root {
+    --app-bg: #fff8fb;
+    --app-bg-soft: #fffdf8;
+    --surface-primary: rgba(255, 255, 255, 0.82);
+    --surface-secondary: rgba(255, 247, 252, 0.9);
+    --surface-muted: #f7f2ff;
+    --border-soft: rgba(226, 203, 224, 0.55);
+    --text-strong: #524560;
+    --text-body: #6f647b;
+    --text-muted: #9c92a8;
+    --peach-100: #fff0e4;
+    --peach-200: #ffd8c2;
+    --rose-100: #ffe8f0;
+    --rose-200: #f6bfd2;
+    --lavender-100: #f3eeff;
+    --lavender-200: #d7caf9;
+    --mint-100: #ecfbf3;
+    --mint-200: #bce7cf;
+    --sky-100: #eef8ff;
+    --sky-200: #c7e6fb;
+    --shadow-soft: 0 22px 50px rgba(202, 181, 213, 0.14);
+    --shadow-soft-sm: 0 12px 30px rgba(202, 181, 213, 0.1);
+  }
+
+  * {
+    scrollbar-color: #d8c7ee transparent;
+  }
+
   body {
-    @apply antialiased selection:bg-orange-500/20 bg-[#FDFCF8] text-slate-800;
+    @apply antialiased;
+    background:
+      radial-gradient(circle at top left, rgba(255, 214, 226, 0.7), transparent 32%),
+      radial-gradient(circle at top right, rgba(205, 241, 225, 0.8), transparent 28%),
+      linear-gradient(180deg, var(--app-bg-soft) 0%, var(--app-bg) 100%);
+    color: var(--text-strong);
+    font-feature-settings: "ss01" 1;
+  }
+
+  ::selection {
+    background: rgba(246, 191, 210, 0.45);
+    color: var(--text-strong);
+  }
+
+  button,
+  input {
+    font: inherit;
+  }
+
+  button:focus-visible,
+  input:focus-visible {
+    outline: 3px solid rgba(197, 185, 247, 0.75);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 
@@ -23,4 +84,3 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
-

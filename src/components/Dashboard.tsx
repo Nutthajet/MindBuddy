@@ -1,108 +1,186 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { 
-  Zap, 
-  Brain, 
-  MessageCircle, 
+import {
+  AlertCircle,
+  Brain,
   Clock,
-  ArrowUpRight
+  ShieldCheck,
+  Sparkles,
+  Zap,
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 export default function Dashboard({ isCoping }: { isCoping: boolean }) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-      {/* Device Card */}
-      <div className="col-span-1 md:col-span-2 bg-white rounded-3xl p-6 md:p-8 border border-orange-50 shadow-sm relative overflow-hidden group">
-        <div className="absolute top-0 right-0 p-6 md:p-8">
-           <Zap size={32} className={cn("md:size-10 transition-colors duration-500", isCoping ? "text-red-400" : "text-orange-500")} />
-        </div>
-        
-        <div className="relative z-10 transition-transform duration-500 group-hover:scale-[1.01]">
-          <span className="text-orange-600 font-black text-[10px] uppercase tracking-[0.2em] bg-orange-50 px-3 py-1 rounded-full border border-orange-100">ตุ๊กตาของฉัน</span>
-          <h2 className="text-3xl md:text-4xl font-black mt-4 md:mt-6 mb-2 text-slate-800">Bear-01 <span className="text-slate-200 font-light tracking-tighter">#BuddyPro</span></h2>
-          <p className="text-slate-400 text-xs md:text-sm font-medium max-w-sm mb-6 md:mb-10 leading-relaxed">
-            Edge AI กำลังตรวจสอบแรงบีบระดับไมโคร ขณะนี้อยู่ใน 
-            <span className={cn("font-bold", isCoping ? "text-red-500" : "text-orange-600 uppercase tracking-wider")}> {isCoping ? "โหมดภาวะฉุกเฉิน" : "โหมดปกติ"}</span>.
+    <div className="flex flex-col gap-4 md:grid md:grid-cols-3 md:gap-6">
+      <div className="relative order-1 overflow-hidden rounded-[32px] border border-[color:var(--border-soft)] bg-[rgba(255,255,255,0.82)] p-6 shadow-[var(--shadow-soft)] backdrop-blur-sm md:order-first md:col-span-2 md:p-8">
+        <div className="absolute inset-x-0 top-0 h-24 bg-[linear-gradient(90deg,rgba(255,232,240,0.85),rgba(236,251,243,0.72),rgba(243,238,255,0.8))]" />
+        <div className="absolute -right-8 top-6 h-28 w-28 rounded-full bg-[rgba(255,216,194,0.45)] blur-2xl" />
+
+        <div className="relative z-10">
+          <div className="mb-5 flex items-start justify-between gap-4">
+            <div>
+              <span className="inline-flex items-center gap-2 rounded-full border border-[#f6d5de] bg-[var(--rose-100)] px-3 py-1 text-[11px] font-bold tracking-wide text-[#b67895]">
+                <Sparkles size={14} />
+                ตุ๊กตาของฉัน
+              </span>
+              <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-[var(--text-strong)] md:text-4xl">
+                Bear-01 <span className="font-semibold text-[var(--text-muted)]">#BuddyPro</span>
+              </h2>
+            </div>
+
+            <div
+              className={cn(
+                'flex h-14 w-14 items-center justify-center rounded-[24px] border bg-white/80 shadow-[var(--shadow-soft-sm)]',
+                isCoping ? 'border-rose-200 text-rose-400' : 'border-[#f6d5de] text-[#d99a7f]'
+              )}
+            >
+              <Zap size={28} />
+            </div>
+          </div>
+
+          <p className="max-w-xl text-sm leading-7 text-[var(--text-body)] md:text-base">
+            Bear-01 กำลังตรวจสอบแรงบีบ ขณะนี้อยู่ใน
+            <div className={cn('ml-1 font-bold', isCoping ? 'text-rose-500' : 'text-[#b67895]')}>
+              {isCoping ? 'โหมดเฝ้าระวังเป็นพิเศษ' : 'โหมดปกติ'}
+            </div>
           </p>
 
-          <div className="grid grid-cols-2 gap-3 md:gap-4">
-             <div className="bg-orange-50/50 border border-orange-100 p-3 md:p-4 rounded-2xl flex items-center gap-2 md:gap-3">
-                <Brain className="text-orange-300 size-5 md:size-6" />
-                <div>
-                   <p className="text-[8px] md:text-[10px] text-orange-800/40 font-black uppercase tracking-widest">ความแม่นยำ</p>
-                   <p className="text-lg md:text-xl font-black text-slate-800">98.2%</p>
+          <div className="mt-6 grid grid-cols-1 gap-3 md:mt-8 md:grid-cols-2 md:gap-4">
+            <div className="rounded-[24px] border border-[#f4d6de] bg-[linear-gradient(135deg,rgba(255,240,228,0.9),rgba(255,248,252,0.95))] p-4 shadow-[var(--shadow-soft-sm)]">
+              <div className="flex items-center gap-3">
+                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/80 text-[#d79a86]">
+                  <Brain className="size-5 md:size-6" />
                 </div>
-             </div>
-             <div className="bg-blue-50/50 border border-blue-100 p-3 md:p-4 rounded-2xl flex items-center gap-2 md:gap-3">
-                <Clock className="text-blue-300 size-5 md:size-6" />
                 <div>
-                   <p className="text-[8px] md:text-[10px] text-blue-800/40 font-black uppercase tracking-widest">การใช้งาน</p>
-                   <p className="text-lg md:text-xl font-black text-slate-800">14ชม. 22น.</p>
+                  <p className="text-[11px] font-bold tracking-wide text-[var(--text-muted)]">แบตเตอรี่</p>
+                  <p className="text-xl font-extrabold text-[var(--text-strong)]">98%</p>
                 </div>
-             </div>
-          </div>
-        </div>
+              </div>
+            </div>
 
-        {/* Decorative Doll Silhouette based on design */}
-        <div className="absolute -bottom-20 -right-20 pointer-events-none group-hover:rotate-12 transition-transform duration-1000 opacity-5">
-           <div className="w-64 md:w-80 h-80 md:h-96 bg-orange-500 rounded-[60px] md:rounded-[80px]" />
+            <div className="rounded-[24px] border border-[#dce9f8] bg-[linear-gradient(135deg,rgba(238,248,255,0.95),rgba(243,238,255,0.9))] p-4 shadow-[var(--shadow-soft-sm)]">
+              <div className="flex items-center gap-3">
+                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/80 text-[#7ca6c5]">
+                  <Clock className="size-5 md:size-6" />
+                </div>
+                <div>
+                  <p className="text-[11px] font-bold tracking-wide text-[var(--text-muted)]">เวลาใช้งาน</p>
+                  <p className="text-xl font-extrabold text-[var(--text-strong)]">5 ชม. 22 นาที</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Therapy Stats */}
-      <div className="bg-orange-500 rounded-3xl p-6 md:p-8 text-white relative overflow-hidden shadow-xl shadow-orange-100">
-        <h3 className="text-[10px] font-black uppercase tracking-[0.3em] mb-6 md:mb-8 opacity-80">
-          การตอบสนองอัตโนมัติ
-        </h3>
-        <div className="space-y-4 md:space-y-6 relative z-10">
-          <div className="flex justify-between items-center border-b border-white/20 pb-3 md:pb-4">
-            <span className="text-[10px] font-bold uppercase tracking-widest opacity-80">แผ่นความร้อน</span>
-            <span className="font-black text-xl md:text-2xl tracking-tighter">38.0°C</span>
+      <div className="order-2 flex flex-col gap-4 md:order-first md:col-span-1 md:gap-6">
+        <div className="overflow-hidden rounded-[32px] border border-[#f4d6de] bg-[linear-gradient(180deg,rgba(255,236,244,0.96),rgba(255,247,250,0.96))] p-6 shadow-[var(--shadow-soft)] md:p-8">
+          <h3 className="mb-6 text-[11px] font-extrabold tracking-[0.18em] text-[#b67895] md:mb-8">
+            การตอบสนองอัตโนมัติ
+          </h3>
+
+          <div className="space-y-4">
+            {[
+              ['แผ่นความร้อน', '38.0°C'],
+              ['การสั่นสะเทือน', 'ผ่อนคลาย'],
+              ['สถานะซิงก์', 'เชื่อมต่อ'],
+            ].map(([label, value]) => (
+              <div
+                key={label}
+                className="flex items-center justify-between rounded-[22px] border border-white/70 bg-white/75 px-4 py-3"
+              >
+                <span className="text-[11px] font-bold tracking-wide text-[var(--text-muted)]">{label}</span>
+                <span className="text-lg font-extrabold text-[var(--text-strong)]">{value}</span>
+              </div>
+            ))}
           </div>
-          <div className="flex justify-between items-center border-b border-white/20 pb-3 md:pb-4">
-            <span className="text-[10px] font-bold uppercase tracking-widest opacity-80">การสั่นสะเทือน</span>
-            <span className="font-black text-xl md:text-2xl tracking-tighter uppercase">ผ่อนคลาย</span>
-          </div>
-          <div className="flex justify-between items-center border-b border-white/20 pb-3 md:pb-4">
-            <span className="text-[10px] font-bold uppercase tracking-widest opacity-80">สถานะซิงค์</span>
-            <span className="font-black text-xl md:text-2xl tracking-tighter">สด</span>
-          </div>
+
+          <button className="mt-8 w-full rounded-[22px] bg-[linear-gradient(135deg,#f6bfd2,#e9c8f7)] py-4 text-sm font-extrabold tracking-[0.16em] text-white shadow-[var(--shadow-soft-sm)] transition-all hover:translate-y-[-1px] active:scale-95">
+            เริ่มการทำงานอัตโนมัติ
+          </button>
         </div>
-        <button className="mt-8 md:mt-10 w-full py-4 bg-white text-orange-500 rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-lg transition-all active:scale-95 group">
-          เริ่มการทำงานเอง
-        </button>
+
+        <div className="rounded-[32px] border border-[color:var(--border-soft)] bg-[rgba(255,255,255,0.82)] p-6 shadow-[var(--shadow-soft-sm)] md:p-8">
+          <h4 className="mb-3 flex items-center gap-2 text-[11px] font-extrabold tracking-[0.18em] text-[var(--text-muted)] md:mb-4">
+            <ShieldCheck className="text-[#7fb89e]" size={16} />
+            ความปลอดภัยส่วนบุคคล
+          </h4>
+          <p className="text-[12px] leading-6 text-[var(--text-body)] md:text-[13px]">
+            การสื่อสารทั้งหมดถูกเข้ารหัสแบบ end-to-end และข้อมูลส่วนบุคคลจะไม่ถูกเปิดเผยหากไม่ได้รับอนุญาต
+          </p>
+        </div>
       </div>
 
-      {/* Recent Alerts List - Matching Design Style */}
-      <div className="col-span-1 md:col-span-3 bg-white rounded-3xl p-6 md:p-8 border border-slate-100 shadow-sm mt-4">
-        <div className="flex justify-between items-center mb-6 md:mb-8">
-          <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">รูปแบบเหตุการณ์ล่าสุด</h3>
-          <button className="text-orange-500 text-[10px] font-black uppercase tracking-widest hover:underline">
+      <div className="order-3 rounded-[32px] border border-[color:var(--border-soft)] bg-[rgba(255,255,255,0.82)] p-6 shadow-[var(--shadow-soft)] md:col-span-3 md:p-8">
+        <div className="mb-6 flex items-center justify-between md:mb-8">
+          <h3 className="text-[11px] font-extrabold tracking-[0.18em] text-[var(--text-muted)]">
+            เหตุการณ์ล่าสุด
+          </h3>
+          <button className="rounded-full bg-[var(--surface-secondary)] px-3 py-1.5 text-[11px] font-bold tracking-wide text-[#b67895] transition-colors hover:bg-[var(--rose-100)]">
             ดูย้อนหลัง
           </button>
         </div>
-        
-        <div className="space-y-3">
-          <div className="flex items-center gap-3 md:gap-4 p-4 bg-slate-50 rounded-2xl group hover:bg-orange-50/30 transition-colors">
-            <div className="w-2 h-2 bg-orange-400 rounded-full shrink-0" />
-            <div className="flex-1">
-              <p className="text-[11px] md:text-xs font-black text-slate-800 uppercase tracking-tight">ตรวจพบแรงบีบที่สม่ำเสมอ</p>
-              <p className="text-[9px] md:text-[10px] text-slate-400 font-bold mt-0.5">14:42 • ตรวจพบผ่าน FSR402</p>
-            </div>
-            <span className="text-[8px] md:text-[10px] font-black text-orange-600 bg-orange-100/50 px-2 md:px-3 py-1 rounded-full uppercase tracking-tighter shrink-0">อัตโนมัติ</span>
-          </div>
 
-          <div className="flex items-center gap-3 md:gap-4 p-4 bg-slate-50 rounded-2xl group hover:bg-blue-50/30 transition-colors">
-            <div className="w-2 h-2 bg-blue-400 rounded-full shrink-0" />
-            <div className="flex-1">
-              <p className="text-[11px] md:text-xs font-black text-slate-800 uppercase tracking-tight">เปิดใช้งานการสั่นแบบฝึกหายใจ</p>
-              <p className="text-[9px] md:text-[10px] text-slate-400 font-bold mt-0.5">12:15 • ตรวจสอบระบบสำเร็จ</p>
+        <div className="space-y-3">
+          {[
+            {
+              dot: 'bg-[#f3afbd]',
+              tone: 'bg-[linear-gradient(135deg,rgba(255,245,248,1),rgba(255,240,228,0.9))]',
+              tag: 'text-[#b67895] bg-[var(--rose-100)]',
+              title: 'ตรวจพบอาการเครียดเล็กน้อย',
+              meta: '14:42 • ตรวจพบผ่าน FSR402',
+              action: 'อัตโนมัติ',
+            },
+            {
+              dot: 'bg-[#9dcfe6]',
+              tone: 'bg-[linear-gradient(135deg,rgba(238,248,255,1),rgba(243,238,255,0.94))]',
+              tag: 'text-[#6d98b8] bg-[var(--sky-100)]',
+              title: 'เปิดใช้งานการสั่นแบบฝึกหายใจ',
+              meta: '12:15 • ระบบตอบสนองสำเร็จ',
+              action: 'ด้วยตนเอง',
+            },
+          ].map((item) => (
+            <div
+              key={item.title}
+              className={cn(
+                'flex items-center gap-4 rounded-[24px] border border-white/70 p-4 shadow-[var(--shadow-soft-sm)] transition-all hover:translate-y-[-1px]',
+                item.tone
+              )}
+            >
+              <div className={cn('h-2.5 w-2.5 shrink-0 rounded-full', item.dot)} />
+              <div className="flex-1">
+                <p className="text-sm font-extrabold tracking-tight text-[var(--text-strong)]">{item.title}</p>
+                <p className="mt-1 text-[11px] font-semibold tracking-wide text-[var(--text-muted)]">{item.meta}</p>
+              </div>
+              <span className={cn('shrink-0 rounded-full px-3 py-1.5 text-[10px] font-bold tracking-wide', item.tag)}>
+                {item.action}
+              </span>
             </div>
-            <span className="text-[8px] md:text-[10px] font-black text-blue-600 bg-blue-100/50 px-2 md:px-3 py-1 rounded-full uppercase tracking-tighter shrink-0">ด้วยตนเอง</span>
-          </div>
+          ))}
         </div>
       </div>
+
+      <motion.div
+        whileHover={{ y: -2 }}
+        className="order-4 flex flex-col rounded-[32px] border border-[#d9cff9] bg-[linear-gradient(135deg,rgba(227,220,255,0.98),rgba(246,233,242,0.95))] p-5 text-[var(--text-strong)] shadow-[var(--shadow-soft)] md:col-span-3 md:rounded-[40px] md:p-8"
+      >
+        <div className="flex items-start gap-4">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[20px] border border-white/50 bg-white/60 text-[#b67895] md:h-14 md:w-14">
+            <AlertCircle className="h-6 w-6 md:h-7 md:w-7" strokeWidth={2.5} />
+          </div>
+          <div className="flex-1">
+            <h3 className="text-xl font-extrabold tracking-tight md:text-2xl">ปุ่มฉุกเฉิน SOS</h3>
+            <p className="mt-2 text-sm leading-6 text-[var(--text-body)] md:mt-4">
+              เมื่อกดปุ่ม SOS ระบบจะส่งการแจ้งเตือนไปยังผู้ดูแลและผู้เชี่ยวชาญที่คุณเลือกไว้
+            </p>
+          </div>
+        </div>
+
+        <button className="mt-5 w-full rounded-[24px] bg-white py-4 text-sm font-extrabold tracking-[0.18em] text-[#8f719f] shadow-[var(--shadow-soft-sm)] transition-all active:scale-95 md:mt-7 md:py-5">
+          ขอความช่วยเหลือทันที
+        </button>
+      </motion.div>
     </div>
   );
 }

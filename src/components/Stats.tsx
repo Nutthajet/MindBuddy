@@ -1,14 +1,14 @@
 import React from 'react';
-import { 
-  AreaChart, 
-  Area, 
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Tooltip, 
-  ResponsiveContainer,
+import {
+  Area,
+  AreaChart,
+  Bar,
   BarChart,
-  Bar
+  CartesianGrid,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
 } from 'recharts';
 
 const data = [
@@ -21,68 +21,71 @@ const data = [
   { time: '20:00', intensity: 35, freq: 3 },
 ];
 
+const tooltipStyle = {
+  borderRadius: '18px',
+  border: '1px solid rgba(226, 203, 224, 0.55)',
+  boxShadow: '0 18px 40px rgba(202, 181, 213, 0.16)',
+  backgroundColor: 'rgba(255,255,255,0.96)',
+  padding: '10px 12px',
+};
+
 export default function Stats() {
   return (
     <div className="space-y-6">
-      <div className="bg-white p-6 md:p-8 rounded-3xl border border-orange-50 shadow-sm transition-all hover:shadow-lg hover:shadow-orange-100/20">
+      <div className="rounded-[32px] border border-[color:var(--border-soft)] bg-[rgba(255,255,255,0.82)] p-6 shadow-[var(--shadow-soft)] md:p-8">
         <div className="mb-6 md:mb-8">
-          <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2">ระดับความเครียด</h3>
-          <p className="text-slate-500 font-bold text-xs md:text-sm tracking-tight">ค่าความเข้มข้นที่รวบรวมจากการประมวลผลของ Edge AI</p>
+          <h3 className="mb-2 text-[11px] font-extrabold tracking-[0.18em] text-[var(--text-muted)]">
+            ระดับความเครียด
+          </h3>
+          <p className="text-sm font-semibold tracking-wide text-[var(--text-body)]">
+            ค่าความเข้มข้นที่สรุปจากการประมวลผลของ Bear-01 ตลอดทั้งวัน
+          </p>
         </div>
-        
-        <div className="h-[250px] md:h-[350px] w-full">
+
+        <div className="h-[250px] w-full md:h-[350px]">
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={data}>
               <defs>
                 <linearGradient id="colorIntensity" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#F97316" stopOpacity={0.3}/>
-                  <stop offset="95%" stopColor="#F97316" stopOpacity={0}/>
+                  <stop offset="5%" stopColor="#f3afbd" stopOpacity={0.55} />
+                  <stop offset="95%" stopColor="#f3afbd" stopOpacity={0.02} />
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F9731610" />
-              <XAxis dataKey="time" axisLine={false} tickLine={false} tick={{fill: '#94a3b8', fontSize: 10, fontWeight: 700}} />
+              <CartesianGrid strokeDasharray="4 4" vertical={false} stroke="rgba(231, 214, 235, 0.8)" />
+              <XAxis dataKey="time" axisLine={false} tickLine={false} tick={{ fill: '#9c92a8', fontSize: 11, fontWeight: 700 }} />
               <YAxis hide />
-              <Tooltip 
-                contentStyle={{ borderRadius: '20px md:24px', border: 'none', boxShadow: '0 20px 25px -5px rgb(249 115 22 / 0.1)', padding: '12px md:16px' }}
-              />
-              <Area 
-                type="monotone" 
-                dataKey="intensity" 
-                stroke="#F97316" 
-                strokeWidth={3}
-                fillOpacity={1} 
-                fill="url(#colorIntensity)" 
-              />
+              <Tooltip contentStyle={tooltipStyle} cursor={{ stroke: '#e9d9ea', strokeWidth: 1 }} />
+              <Area type="monotone" dataKey="intensity" stroke="#d88ea4" strokeWidth={3} fillOpacity={1} fill="url(#colorIntensity)" />
             </AreaChart>
           </ResponsiveContainer>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white p-6 md:p-8 rounded-3xl border border-slate-100 shadow-sm">
-          <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-6">ความถี่ในการบีบ</h3>
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div className="rounded-[32px] border border-[color:var(--border-soft)] bg-[rgba(255,255,255,0.82)] p-6 shadow-[var(--shadow-soft-sm)] md:p-8">
+          <h3 className="mb-6 text-[11px] font-extrabold tracking-[0.18em] text-[var(--text-muted)]">
+            ความถี่ในการบีบ
+          </h3>
           <div className="h-[200px] md:h-[250px]">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={data}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f1f1" />
-                <XAxis dataKey="time" axisLine={false} tickLine={false} tick={{fill: '#94a3b8', fontSize: 10, fontWeight: 700}} />
+                <CartesianGrid strokeDasharray="4 4" vertical={false} stroke="rgba(231, 214, 235, 0.8)" />
+                <XAxis dataKey="time" axisLine={false} tickLine={false} tick={{ fill: '#9c92a8', fontSize: 11, fontWeight: 700 }} />
                 <YAxis hide />
-                <Tooltip 
-                  cursor={{fill: '#F9731605'}}
-                  contentStyle={{ borderRadius: '16px', border: 'none' }} 
-                />
-                <Bar dataKey="freq" fill="#FDBA74" radius={[4, 4, 0, 0]} />
+                <Tooltip contentStyle={tooltipStyle} cursor={{ fill: 'rgba(243, 238, 255, 0.55)' }} />
+                <Bar dataKey="freq" fill="#b8d8ee" radius={[8, 8, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
         </div>
 
-        <div className="bg-orange-500 p-8 md:p-10 rounded-[32px] md:rounded-[40px] shadow-xl shadow-orange-100 flex flex-col justify-center text-center text-white">
-          <div className="mb-2 text-white/60 text-[10px] font-black uppercase tracking-widest">สรุปผลรายวัน</div>
-          <div className="text-5xl md:text-7xl font-black tracking-tighter">ปกติ</div>
-          <p className="mt-4 md:mt-6 text-white/80 text-xs md:text-sm font-medium leading-relaxed">
-            ระดับความเครียดเฉลี่ยของคุณอยู่ในเกณฑ์ปกติสำหรับระดับประสาทวันนี้ 
-            AI แนะนำให้ใช้ <span className="text-white font-bold underline decoration-white/30 underline-offset-4">โหมดประคบอุ่น 2.5 นาที</span> ในช่วงเย็น
+        <div className="flex flex-col justify-center rounded-[32px] border border-[#f4d6de] bg-[linear-gradient(135deg,rgba(255,240,244,0.98),rgba(244,238,255,0.98))] p-8 text-center shadow-[var(--shadow-soft)] md:rounded-[40px] md:p-10">
+          <div className="text-[11px] font-extrabold tracking-[0.18em] text-[#b67895]">สรุปผลรายวัน</div>
+          <div className="mt-2 text-5xl font-extrabold tracking-tight text-[var(--text-strong)] md:text-7xl">ปกติ</div>
+          <p className="mt-4 text-xs leading-7 text-[var(--text-body)] md:mt-6">
+            ระดับความเครียดเฉลี่ยของคุณยังอยู่ในเกณฑ์ที่สมดุลสำหรับวันนี้ ระบบแนะนำให้ใช้
+            <span className="mx-1 font-bold text-[#b67895]">โหมดประคบอุ่น 2.5 นาที</span>
+            ในช่วงเย็นเพื่อผ่อนคลายต่อเนื่อง
           </p>
         </div>
       </div>
