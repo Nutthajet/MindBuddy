@@ -47,10 +47,10 @@ export default function Chat() {
     setIsLoading(true);
 
     try {
-      const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+      const apiKey = import.meta.env.GEMINI_API_KEY;
 
       if (!apiKey) {
-        throw new Error('ไม่พบ API key กรุณาตั้งค่า VITE_GEMINI_API_KEY ในไฟล์ .env');
+        throw new Error('ไม่พบ API key กรุณาตั้งค่า GEMINI_API_KEY ในไฟล์ .env');
       }
 
       const response = await fetch(
