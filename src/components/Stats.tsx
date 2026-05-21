@@ -64,7 +64,6 @@ export default function Stats() {
               
               <XAxis 
                 dataKey="time" 
-                boundaryGap={false}
                 axisLine={false} 
                 tickLine={false} 
                 tick={{ fill: '#9c92a8', fontSize: 11, fontWeight: 700 }} 
@@ -89,7 +88,7 @@ export default function Stats() {
               <Tooltip 
                 contentStyle={tooltipStyle} 
                 cursor={{ stroke: '#e9d9ea', strokeWidth: 1 }}
-                formatter={(value: number) => [formatYAxis(value) || value, "ระดับ"]}
+                formatter={(value: unknown) => { const v = value as number; return [formatYAxis(v) || v, "ระดับ"]; }}
               />
               <Area type="monotone" dataKey="intensity" stroke="#d88ea4" strokeWidth={3} fillOpacity={1} fill="url(#colorIntensity)" />
             </AreaChart>
