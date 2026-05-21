@@ -14,6 +14,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import Chat from './components/Chat';
 import Consultation from './components/Consultation';
 import Dashboard from './components/Dashboard';
+import Setting from './components/Setting';
 import Stats from './components/Stats';
 import { View } from './types';
 import { cn } from './lib/utils';
@@ -21,8 +22,6 @@ import { cn } from './lib/utils';
 export default function App() {
   const [currentView, setCurrentView] = useState<View>('dashboard');
   const [isCoping, setIsCoping] = useState(false);
-  const [therapistAccessEnabled, setTherapistAccessEnabled] = useState(true);
-  const [familyDashboardEnabled, setFamilyDashboardEnabled] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -162,77 +161,7 @@ export default function App() {
           {currentView === 'stats' && <Stats />}
           {currentView === 'consultation' && <Consultation />}
           {currentView === 'chat' && <Chat />}
-          {currentView === 'settings' && (
-            <div className="rounded-[32px] border border-[color:var(--border-soft)] bg-[rgba(255,255,255,0.82)] p-6 shadow-[var(--shadow-soft)] backdrop-blur-sm md:p-8">
-              <h2 className="mb-6 text-xs font-extrabold tracking-[0.18em] text-[var(--text-muted)]">
-                ความเป็นส่วนตัวของข้อมูล
-              </h2>
-              <div className="space-y-6">
-                <div className="flex items-center justify-between rounded-[24px] border border-white/70 bg-[var(--surface-secondary)] p-4">
-                  <div>
-                    <p className="font-bold text-[var(--text-strong)]">การเข้าถึงของนักบำบัด</p>
-                    <p className="text-[11px] font-semibold tracking-wide text-[var(--text-muted)]">
-                      ซิงก์ข้อมูลและแจ้งเตือนแบบเรียลไทม์
-                    </p>
-                  </div>
-                  <button
-                    type="button"
-                    aria-pressed={therapistAccessEnabled}
-                    aria-label="สลับการเข้าถึงนักบำบัด"
-                    onClick={() => setTherapistAccessEnabled((current) => !current)}
-                    className={cn(
-                      'relative h-6 w-11 rounded-full transition-colors duration-200',
-                      therapistAccessEnabled
-                        ? 'bg-[linear-gradient(135deg,#bde6d1,#d6f3e3)]'
-                        : 'bg-[#e6e0f0]'
-                    )}
-                  >
-                    <span
-                      className={cn(
-                        'absolute top-1 h-4 w-4 rounded-full bg-white shadow-sm transition-all duration-200',
-                        therapistAccessEnabled ? 'right-1' : 'left-1'
-                      )}
-                    />
-                  </button>
-                </div>
-
-                <div className="flex items-center justify-between rounded-[24px] border border-white/70 bg-[var(--surface-secondary)] p-4">
-                  <div>
-                    <p className="font-bold text-[var(--text-strong)]">แดชบอร์ดครอบครัว</p>
-                    <p className="text-[11px] font-semibold tracking-wide text-[var(--text-muted)]">
-                      แชร์เฉพาะสถานะและแบตเตอรี่เท่านั้น
-                    </p>
-                  </div>
-                  <button
-                    type="button"
-                    aria-pressed={familyDashboardEnabled}
-                    aria-label="สลับแดชบอร์ดครอบครัว"
-                    onClick={() => setFamilyDashboardEnabled((current) => !current)}
-                    className={cn(
-                      'relative h-6 w-11 rounded-full transition-colors duration-200',
-                      familyDashboardEnabled
-                        ? 'bg-[linear-gradient(135deg,#bde6d1,#d6f3e3)]'
-                        : 'bg-[#e6e0f0]'
-                    )}
-                  >
-                    <span
-                      className={cn(
-                        'absolute top-1 h-4 w-4 rounded-full bg-white shadow-sm transition-all duration-200',
-                        familyDashboardEnabled ? 'right-1' : 'left-1'
-                      )}
-                    />
-                  </button>
-                </div>
-
-                <div className="rounded-[24px] border border-dashed border-[color:var(--border-soft)] bg-white/60 p-4">
-                  <p className="text-[12px] font-medium leading-relaxed text-[var(--text-body)]">
-                    ระบบ On-Device Processing กำลังทำงาน ข้อมูลเซนเซอร์ดิบจะไม่ถูกส่งออกจากตุ๊กตา Buddy
-                    ของคุณ มีเพียงข้อมูลเชิงสรุปที่ผ่านการประมวลผลแล้วเท่านั้นที่จะถูกแชร์ เพื่อให้คงความเป็นส่วนตัวไว้มากที่สุด
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
+          {currentView === 'settings' && <Setting />}
         </motion.div>
       </main>
 

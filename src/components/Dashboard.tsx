@@ -2,24 +2,81 @@ import React from 'react';
 import { motion } from 'motion/react';
 import {
   AlertCircle,
-  Brain,
+  BatteryFull,
   Clock,
-  ShieldCheck,
+  Smile,
+  Meh,
+  Frown,
+  AlertTriangle,
   Sparkles,
-  Zap,
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 
+type StressLevel = 'normal' | 'mild' | 'moderate' | 'high';
+
+const stressConfig: Record<StressLevel, {
+  label: string;
+  icon: React.ElementType;
+  iconColor: string;
+  cardGradient: string;
+  borderColor: string;
+  badgeColor: string;
+  dotColor: string;
+}> = {
+  normal: {
+    label: 'ปกติ',
+    icon: Smile,
+    iconColor: 'text-[#5fa07a]',
+    cardGradient: 'bg-[linear-gradient(135deg,rgba(212,234,223,0.9),rgba(255,248,252,0.95))]',
+    borderColor: 'border-[#b8deca]',
+    badgeColor: 'bg-[#d4eadf] text-[#3d7a5e]',
+    dotColor: 'bg-[#5fa07a]',
+  },
+  mild: {
+    label: 'เครียดเล็กน้อย',
+    icon: Meh,
+    iconColor: 'text-[#d88ea4]',
+    cardGradient: 'bg-[linear-gradient(135deg,rgba(255,240,244,0.9),rgba(255,248,252,0.95))]',
+    borderColor: 'border-[#f4d6de]',
+    badgeColor: 'bg-[#fde8ef] text-[#b67895]',
+    dotColor: 'bg-[#f3afbd]',
+  },
+  moderate: {
+    label: 'เครียดปานกลาง',
+    icon: AlertCircle,
+    iconColor: 'text-[#e0845c]',
+    cardGradient: 'bg-[linear-gradient(135deg,rgba(255,228,212,0.9),rgba(255,248,252,0.95))]',
+    borderColor: 'border-[#f5c4a8]',
+    badgeColor: 'bg-[#fce4d4] text-[#b85c30]',
+    dotColor: 'bg-[#eda47e]',
+  },
+  high: {
+    label: 'เครียดมาก',
+    icon: AlertTriangle,
+    iconColor: 'text-[#c0706a]',
+    cardGradient: 'bg-[linear-gradient(135deg,rgba(255,214,212,0.9),rgba(255,248,252,0.95))]',
+    borderColor: 'border-[#f5b0ac]',
+    badgeColor: 'bg-[#fdd8d6] text-[#a03030]',
+    dotColor: 'bg-[#e08080]',
+  },
+};
+
 export default function Dashboard({ isCoping }: { isCoping: boolean }) {
+  const stressLevel: StressLevel = isCoping ? 'mild' : 'normal';
+  const stress = stressConfig[stressLevel];
+  const StressIcon = stress.icon;
+
   return (
     <div className="flex flex-col gap-4 md:grid md:grid-cols-3 md:gap-6">
+
+      {/* ── Card หลัก ── */}
       <div className="relative order-1 overflow-hidden rounded-[32px] border border-[color:var(--border-soft)] bg-[rgba(255,255,255,0.82)] p-6 shadow-[var(--shadow-soft)] backdrop-blur-sm md:order-first md:col-span-2 md:p-8">
         <div className="absolute inset-x-0 top-0 h-24 bg-[linear-gradient(90deg,rgba(255,232,240,0.85),rgba(236,251,243,0.72),rgba(243,238,255,0.8))]" />
         <div className="absolute -right-8 top-6 h-28 w-28 rounded-full bg-[rgba(255,216,194,0.45)] blur-2xl" />
 
         <div className="relative z-10">
           <div className="mb-5 flex items-start justify-between gap-4">
-            <div>
+            <div className="flex-1">
               <span className="inline-flex items-center gap-2 rounded-full border border-[#f6d5de] bg-[var(--rose-100)] px-3 py-1 text-[11px] font-bold tracking-wide text-[#b67895]">
                 <Sparkles size={14} />
                 ตุ๊กตาของฉัน
@@ -29,39 +86,39 @@ export default function Dashboard({ isCoping }: { isCoping: boolean }) {
               </h2>
             </div>
 
-            <div
-              className={cn(
-                'flex h-14 w-14 items-center justify-center rounded-[24px] border bg-white/80 shadow-[var(--shadow-soft-sm)]',
-                isCoping ? 'border-rose-200 text-rose-400' : 'border-[#f6d5de] text-[#d99a7f]'
-              )}
-            >
-              <Zap size={28} />
+            {/* รูปตุ๊กตา */}
+            <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-[22px] border-2 border-[#f4d6de] bg-white/70 shadow-[var(--shadow-soft-sm)] md:h-24 md:w-24">
+              <img
+                src="/images/nongpol.jpg"
+                alt="ตุ๊กตา"
+                className="h-full w-full object-cover"
+              />
             </div>
           </div>
-          
-          {/* แก้ไขโครงสร้าง Grid ตรงนี้ให้ถูกต้องและรองรับการแสดงผล 3 กล่องย่อย */}
+
+          {/* 3 กล่องย่อย */}
           <div className="mt-6 grid grid-cols-1 gap-3 md:mt-8 md:grid-cols-3 md:gap-4">
-            
-            {/* กล่องที่ 1: สถานะโหมดเฝ้าระวัง */}
-            <div className="rounded-[24px] border border-[#f4d6de] bg-[linear-gradient(135deg,rgba(255,240,228,0.9),rgba(255,248,252,0.95))] p-4 shadow-[var(--shadow-soft-sm)]">
+
+            {/* สถานะปัจจุบัน */}
+            <div className={cn('rounded-[24px] border p-4 shadow-[var(--shadow-soft-sm)] transition-all duration-500', stress.cardGradient, stress.borderColor)}>
               <div className="flex items-center gap-3">
-                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/80 text-[#d79a86]">
-                  <Brain className="size-5 md:size-6" />
+                <div className={cn('flex h-11 w-11 items-center justify-center rounded-2xl bg-white/80', stress.iconColor)}>
+                  <StressIcon className="size-5 md:size-6" />
                 </div>
                 <div>
-                  <p className="text-[11px] font-bold tracking-wide text-[var(--text-muted)]">สถานะระบบ</p>
-                  <p className={cn('text-sm font-bold mt-0.5', isCoping ? 'text-rose-500' : 'text-[#b67895]')}>
-                    {isCoping ? 'โหมดเฝ้าระวังเป็นพิเศษ' : 'โหมดปกติ'}
+                  <p className="text-[11px] font-bold tracking-wide text-[var(--text-muted)]">สถานะปัจจุบัน</p>
+                  <p className="text-xl font-extrabold text-[var(--text-strong)] transition-all duration-300">
+                    {stress.label}
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* กล่องที่ 2: แบตเตอรี่ */}
+            {/* แบตเตอรี่ */}
             <div className="rounded-[24px] border border-[#f4d6de] bg-[linear-gradient(135deg,rgba(255,240,228,0.9),rgba(255,248,252,0.95))] p-4 shadow-[var(--shadow-soft-sm)]">
               <div className="flex items-center gap-3">
                 <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/80 text-[#d79a86]">
-                  <Brain className="size-5 md:size-6" />
+                  <BatteryFull className="size-5 md:size-6" />
                 </div>
                 <div>
                   <p className="text-[11px] font-bold tracking-wide text-[var(--text-muted)]">แบตเตอรี่</p>
@@ -70,7 +127,7 @@ export default function Dashboard({ isCoping }: { isCoping: boolean }) {
               </div>
             </div>
 
-            {/* กล่องที่ 3: เวลาใช้งาน */}
+            {/* เวลาใช้งาน */}
             <div className="rounded-[24px] border border-[#dce9f8] bg-[linear-gradient(135deg,rgba(238,248,255,0.95),rgba(243,238,255,0.9))] p-4 shadow-[var(--shadow-soft-sm)]">
               <div className="flex items-center gap-3">
                 <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/80 text-[#7ca6c5]">
@@ -87,6 +144,7 @@ export default function Dashboard({ isCoping }: { isCoping: boolean }) {
         </div>
       </div>
 
+      {/* ── การตอบสนองอัตโนมัติ ── */}
       <div className="order-2 flex flex-col gap-4 md:order-first md:col-span-1 md:gap-6">
         <div className="overflow-hidden rounded-[32px] border border-[#f4d6de] bg-[linear-gradient(180deg,rgba(255,236,244,0.96),rgba(255,247,250,0.96))] p-6 shadow-[var(--shadow-soft)] md:p-8">
           <h3 className="mb-6 text-[11px] font-extrabold tracking-[0.18em] text-[#b67895] md:mb-8">
@@ -95,9 +153,8 @@ export default function Dashboard({ isCoping }: { isCoping: boolean }) {
 
           <div className="space-y-4">
             {[
-              ['แผ่นความร้อน', '38.0°C'],
-              ['การสั่นสะเทือน', 'ผ่อนคลาย'],
-              ['สถานะซิงก์', 'เชื่อมต่อ'],
+              ['ระดับความอบอุ่น', '38°C'],
+              ['ระบบสั่นนุ่มนวล', 'ผ่อนคลาย'],
             ].map(([label, value]) => (
               <div
                 key={label}
@@ -113,18 +170,9 @@ export default function Dashboard({ isCoping }: { isCoping: boolean }) {
             เริ่มการทำงานอัตโนมัติ
           </button>
         </div>
-
-        <div className="rounded-[32px] border border-[color:var(--border-soft)] bg-[rgba(255,255,255,0.82)] p-6 shadow-[var(--shadow-soft-sm)] md:p-8">
-          <h4 className="mb-3 flex items-center gap-2 text-[11px] font-extrabold tracking-[0.18em] text-[var(--text-muted)] md:mb-4">
-            <ShieldCheck className="text-[#7fb89e]" size={16} />
-            ความปลอดภัยส่วนบุคคล
-          </h4>
-          <p className="text-[12px] leading-6 text-[var(--text-body)] md:text-[13px]">
-            การสื่อสารทั้งหมดถูกเข้ารหัสแบบ end-to-end และข้อมูลส่วนบุคคลจะไม่ถูกเปิดเผยหากไม่ได้รับอนุญาต
-          </p>
-        </div>
       </div>
 
+      {/* ── เหตุการณ์ล่าสุด ── */}
       <div className="order-3 rounded-[32px] border border-[color:var(--border-soft)] bg-[rgba(255,255,255,0.82)] p-6 shadow-[var(--shadow-soft)] md:col-span-3 md:p-8">
         <div className="mb-6 flex items-center justify-between md:mb-8">
           <h3 className="text-[11px] font-extrabold tracking-[0.18em] text-[var(--text-muted)]">
@@ -142,7 +190,7 @@ export default function Dashboard({ isCoping }: { isCoping: boolean }) {
               tone: 'bg-[linear-gradient(135deg,rgba(255,245,248,1),rgba(255,240,228,0.9))]',
               tag: 'text-[#b67895] bg-[var(--rose-100)]',
               title: 'ตรวจพบอาการเครียดเล็กน้อย',
-              meta: '14:42 • ตรวจพบผ่าน FSR402',
+              meta: '14:42 • ตรวจพบผ่านเซนเซอร์',
               action: 'อัตโนมัติ',
             },
             {
@@ -174,26 +222,6 @@ export default function Dashboard({ isCoping }: { isCoping: boolean }) {
         </div>
       </div>
 
-      <motion.div
-        whileHover={{ y: -2 }}
-        className="order-4 flex flex-col rounded-[32px] border border-[#d9cff9] bg-[linear-gradient(135deg,rgba(227,220,255,0.98),rgba(246,233,242,0.95))] p-5 text-[var(--text-strong)] shadow-[var(--shadow-soft)] md:col-span-3 md:rounded-[40px] md:p-8"
-      >
-        <div className="flex items-start gap-4">
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[20px] border border-white/50 bg-white/60 text-[#b67895] md:h-14 md:w-14">
-            <AlertCircle className="h-6 w-6 md:h-7 md:w-7" strokeWidth={2.5} />
-          </div>
-          <div className="flex-1">
-            <h3 className="text-xl font-extrabold tracking-tight md:text-2xl">ปุ่มฉุกเฉิน SOS</h3>
-            <p className="mt-2 text-sm leading-6 text-[var(--text-body)] md:mt-4">
-              เมื่อกดปุ่ม SOS ระบบจะส่งการแจ้งเตือนไปยังผู้ดูแลและผู้เชี่ยวชาญที่คุณเลือกไว้
-            </p>
-          </div>
-        </div>
-
-        <button className="mt-5 w-full rounded-[24px] bg-white py-4 text-sm font-extrabold tracking-[0.18em] text-[#8f719f] shadow-[var(--shadow-soft-sm)] transition-all active:scale-95 md:mt-7 md:py-5">
-          ขอความช่วยเหลือทันที
-        </button>
-      </motion.div>
     </div>
   );
 }
