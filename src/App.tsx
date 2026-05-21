@@ -52,7 +52,6 @@ export default function App() {
           </div>
           <div>
             <span className="block text-lg font-extrabold tracking-tight text-[var(--text-strong)]">Mind Buddy</span>
-            <span className="text-[11px] font-semibold tracking-wide text-[var(--text-muted)]">พื้นที่ปลอดภัยแสนละมุน</span>
           </div>
         </div>
 

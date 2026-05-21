@@ -25,7 +25,7 @@ export default function Dashboard({ isCoping }: { isCoping: boolean }) {
                 ตุ๊กตาของฉัน
               </span>
               <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-[var(--text-strong)] md:text-4xl">
-                Bear-01 <span className="font-semibold text-[var(--text-muted)]">#BuddyPro</span>
+                Doraemon <span className="font-semibold text-[var(--text-muted)]">#BuddyPro</span>
               </h2>
             </div>
 
@@ -38,15 +38,26 @@ export default function Dashboard({ isCoping }: { isCoping: boolean }) {
               <Zap size={28} />
             </div>
           </div>
-
-          <p className="max-w-xl text-sm leading-7 text-[var(--text-body)] md:text-base">
-            Bear-01 กำลังตรวจสอบแรงบีบ ขณะนี้อยู่ใน
-            <div className={cn('ml-1 font-bold', isCoping ? 'text-rose-500' : 'text-[#b67895]')}>
-              {isCoping ? 'โหมดเฝ้าระวังเป็นพิเศษ' : 'โหมดปกติ'}
+          
+          {/* แก้ไขโครงสร้าง Grid ตรงนี้ให้ถูกต้องและรองรับการแสดงผล 3 กล่องย่อย */}
+          <div className="mt-6 grid grid-cols-1 gap-3 md:mt-8 md:grid-cols-3 md:gap-4">
+            
+            {/* กล่องที่ 1: สถานะโหมดเฝ้าระวัง */}
+            <div className="rounded-[24px] border border-[#f4d6de] bg-[linear-gradient(135deg,rgba(255,240,228,0.9),rgba(255,248,252,0.95))] p-4 shadow-[var(--shadow-soft-sm)]">
+              <div className="flex items-center gap-3">
+                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/80 text-[#d79a86]">
+                  <Brain className="size-5 md:size-6" />
+                </div>
+                <div>
+                  <p className="text-[11px] font-bold tracking-wide text-[var(--text-muted)]">สถานะระบบ</p>
+                  <p className={cn('text-sm font-bold mt-0.5', isCoping ? 'text-rose-500' : 'text-[#b67895]')}>
+                    {isCoping ? 'โหมดเฝ้าระวังเป็นพิเศษ' : 'โหมดปกติ'}
+                  </p>
+                </div>
+              </div>
             </div>
-          </p>
 
-          <div className="mt-6 grid grid-cols-1 gap-3 md:mt-8 md:grid-cols-2 md:gap-4">
+            {/* กล่องที่ 2: แบตเตอรี่ */}
             <div className="rounded-[24px] border border-[#f4d6de] bg-[linear-gradient(135deg,rgba(255,240,228,0.9),rgba(255,248,252,0.95))] p-4 shadow-[var(--shadow-soft-sm)]">
               <div className="flex items-center gap-3">
                 <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/80 text-[#d79a86]">
@@ -59,6 +70,7 @@ export default function Dashboard({ isCoping }: { isCoping: boolean }) {
               </div>
             </div>
 
+            {/* กล่องที่ 3: เวลาใช้งาน */}
             <div className="rounded-[24px] border border-[#dce9f8] bg-[linear-gradient(135deg,rgba(238,248,255,0.95),rgba(243,238,255,0.9))] p-4 shadow-[var(--shadow-soft-sm)]">
               <div className="flex items-center gap-3">
                 <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/80 text-[#7ca6c5]">
@@ -70,6 +82,7 @@ export default function Dashboard({ isCoping }: { isCoping: boolean }) {
                 </div>
               </div>
             </div>
+
           </div>
         </div>
       </div>

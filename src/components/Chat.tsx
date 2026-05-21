@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Loader2, MessageCircle, Send } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { cn } from '../lib/utils';
+import { chatWithMindBuddy } from '../../services/geminiService';
 
 interface ChatMessage {
   id: string;
@@ -14,7 +15,7 @@ export default function Chat() {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: '1',
-      content: 'สวัสดีค่ะ ฉันคือ Mind Buddy Chat Bot ยินดีที่ได้อยู่เป็นเพื่อนกับคุณ วันนี้อยากคุยเรื่องอะไรดีคะ',
+      content: "วันนี้อยากดูข้อมูลของลูก หรือพูดคุยสักหน่อยไหมคะ 😊",
       sender: 'ai',
       timestamp: new Date(),
     },
@@ -33,11 +34,13 @@ export default function Chat() {
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!input.trim() || isLoading) return;
+    const currentInput = input.trim();
+
+    if (!currentInput || isLoading) return;
 
     const userMessage: ChatMessage = {
       id: Date.now().toString(),
-      content: input,
+      content: currentInput,
       sender: 'user',
       timestamp: new Date(),
     };
@@ -47,47 +50,7 @@ export default function Chat() {
     setIsLoading(true);
 
     try {
-      const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-
-      if (!apiKey) {
-        throw new Error('ไม่พบ API key กรุณาตั้งค่า VITE_GEMINI_API_KEY ในไฟล์ .env');
-      }
-
-      const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            contents: [
-              {
-                parts: [
-                  {
-                    text: input,
-                  },
-                ],
-              },
-            ],
-            generationConfig: {
-              temperature: 0.7,
-              topK: 40,
-              topP: 0.95,
-              maxOutputTokens: 1024,
-            },
-          }),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error(`เกิดข้อผิดพลาดจากระบบ: ${response.statusText}`);
-      }
-
-      const data = await response.json();
-      const aiContent =
-        data.candidates?.[0]?.content?.parts?.[0]?.text ||
-        'ขออภัยนะคะ ตอนนี้ฉันยังตอบคำถามนี้ไม่ได้ ลองพิมพ์ใหม่อีกครั้งได้เลย!';
+      const aiContent = await chatWithMindBuddy(currentInput);
 
       const aiMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
@@ -101,7 +64,7 @@ export default function Chat() {
       console.error('Error:', error);
       const errorMessage: ChatMessage = {
         id: (Date.now() + 2).toString(),
-        content: `ขออภัยค่ะ เกิดข้อผิดพลาด: ${error instanceof Error ? error.message : 'ไม่ทราบสาเหตุ'}`,
+        content: "I'm sorry, the connection is having trouble right now. Would you like to try sending that again?",
         sender: 'ai',
         timestamp: new Date(),
       };
@@ -116,7 +79,7 @@ export default function Chat() {
       <div className="flex-1 space-y-4 overflow-y-auto p-4 pb-44 md:space-y-6 md:p-6">
         <div className="rounded-[28px] border border-[color:var(--border-soft)] bg-[rgba(255,255,255,0.68)] p-4 shadow-[var(--shadow-soft-sm)] backdrop-blur-sm md:p-5">
           <p className="text-sm leading-7 text-[var(--text-body)]">
-            พื้นที่นี้ถูกออกแบบให้สงบ อ่อนโยน และคุยกันได้ทีละเรื่อง คุณสามารถพิมพ์สั้นๆ หรือหยุดพักสายตาก่อนได้ตามสบาย
+            พื้นที่สำหรับเข้าใจลูกและดูแลความรู้สึกของคุณ
           </p>
         </div>
 
@@ -183,7 +146,7 @@ export default function Chat() {
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="พิมพ์ข้อความของคุณ..."
+            placeholder="Type your message..."
             disabled={isLoading}
             className={cn(
               'flex-1 rounded-[24px] border border-[color:var(--border-soft)] bg-white/90 px-4 py-3 text-sm text-[var(--text-strong)] placeholder:text-[var(--text-muted)] shadow-[var(--shadow-soft-sm)] transition-all focus:border-transparent focus:outline-none focus:ring-2 focus:ring-[#d3c3f6] disabled:cursor-not-allowed disabled:opacity-50 md:px-6 md:py-4 md:text-base'

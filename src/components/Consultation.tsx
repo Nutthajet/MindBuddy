@@ -5,7 +5,7 @@ const practitioners = [
   {
     id: '1',
     name: 'ดร. สมชาย ใจดี',
-    role: 'นักจิตวิทยา',
+    role: 'จิตแพทย์',
     status: 'online',
     avatar: '/images/dr_somchai.png',
   },
