@@ -82,14 +82,15 @@ export default function Dashboard({ isCoping }: { isCoping: boolean }) {
                 ตุ๊กตาของฉัน
               </span>
               <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-[var(--text-strong)] md:text-4xl">
-                Doraemon <span className="font-semibold text-[var(--text-muted)]">#BuddyPro</span>
+                Mr.Bump 
               </h2>
+              <div className="font-semibold text-[var(--text-muted)]">#BuddyPro</div>
             </div>
 
             {/* รูปตุ๊กตา */}
             <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-[22px] border-2 border-[#f4d6de] bg-white/70 shadow-[var(--shadow-soft-sm)] md:h-24 md:w-24">
               <img
-                src="/images/nongpol.jpg"
+                src="/images/mrBump.png"
                 alt="ตุ๊กตา"
                 className="h-full w-full object-cover"
               />
